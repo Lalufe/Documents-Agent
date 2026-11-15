@@ -830,13 +830,13 @@ Run: `git diff --stat origin/master...HEAD`
 
 Expected: no database, data file, log, frontend build output, `.env`, or `.superpowers` content is tracked.
 
-- [ ] **Step 4: Push the feature branch**
+- [x] **Step 4: Push the feature branch**
 
 Run: `git push -u origin feat/be1-m0-foundation`
 
 Expected: the branch is available on `origin`.
 
-- [ ] **Step 5: Open the pull request**
+- [x] **Step 5: Open the pull request**
 
 Run:
 

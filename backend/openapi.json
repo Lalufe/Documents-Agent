@@ -1,0 +1,2570 @@
+{
+  "components": {
+    "schemas": {
+      "ActivityPage": {
+        "additionalProperties": false,
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
+        ],
+        "title": "ActivityPage",
+        "type": "object"
+      },
+      "ArtifactKind": {
+        "enum": [
+          "working",
+          "intermediate",
+          "result",
+          "preview",
+          "page_image",
+          "export"
+        ],
+        "title": "ArtifactKind",
+        "type": "string"
+      },
+      "ArtifactReadyEvent": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ArtifactReadyEventData"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "seq": {
+            "minimum": 1,
+            "title": "Seq",
+            "type": "integer"
+          },
+          "task_id": {
+            "format": "uuid",
+            "title": "Task Id",
+            "type": "string"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "title": "Timestamp",
+            "type": "string"
+          },
+          "turn_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Turn Id"
+          },
+          "type": {
+            "const": "artifact.ready",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "seq",
+          "task_id",
+          "turn_id",
+          "job_id",
+          "timestamp",
+          "type",
+          "data"
+        ],
+        "title": "ArtifactReadyEvent",
+        "type": "object"
+      },
+      "ArtifactReadyEventData": {
+        "additionalProperties": false,
+        "properties": {
+          "artifact_id": {
+            "format": "uuid",
+            "title": "Artifact Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "artifact_id"
+        ],
+        "title": "ArtifactReadyEventData",
+        "type": "object"
+      },
+      "ArtifactState": {
+        "enum": [
+          "staged",
+          "published",
+          "failed",
+          "deleted"
+        ],
+        "title": "ArtifactState",
+        "type": "string"
+      },
+      "ArtifactSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "artifact_id": {
+            "format": "uuid",
+            "title": "Artifact Id",
+            "type": "string"
+          },
+          "format": {
+            "$ref": "#/components/schemas/SupportedFormat"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "kind": {
+            "$ref": "#/components/schemas/ArtifactKind"
+          },
+          "published_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Published At"
+          },
+          "sha256": {
+            "title": "Sha256",
+            "type": "string"
+          },
+          "size_bytes": {
+            "minimum": 0,
+            "title": "Size Bytes",
+            "type": "integer"
+          },
+          "state": {
+            "$ref": "#/components/schemas/ArtifactState"
+          }
+        },
+        "required": [
+          "artifact_id",
+          "job_id",
+          "kind",
+          "format",
+          "sha256",
+          "size_bytes",
+          "state",
+          "published_at"
+        ],
+        "title": "ArtifactSummary",
+        "type": "object"
+      },
+      "ClarificationRequiredEvent": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ClarificationRequiredEventData"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "seq": {
+            "minimum": 1,
+            "title": "Seq",
+            "type": "integer"
+          },
+          "task_id": {
+            "format": "uuid",
+            "title": "Task Id",
+            "type": "string"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "title": "Timestamp",
+            "type": "string"
+          },
+          "turn_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Turn Id"
+          },
+          "type": {
+            "const": "clarification.required",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "seq",
+          "task_id",
+          "turn_id",
+          "job_id",
+          "timestamp",
+          "type",
+          "data"
+        ],
+        "title": "ClarificationRequiredEvent",
+        "type": "object"
+      },
+      "ClarificationRequiredEventData": {
+        "additionalProperties": false,
+        "properties": {
+          "clarification_id": {
+            "format": "uuid",
+            "title": "Clarification Id",
+            "type": "string"
+          },
+          "question": {
+            "title": "Question",
+            "type": "string"
+          }
+        },
+        "required": [
+          "clarification_id",
+          "question"
+        ],
+        "title": "ClarificationRequiredEventData",
+        "type": "object"
+      },
+      "ConversionFinishedEvent": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ConversionFinishedEventData"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "seq": {
+            "minimum": 1,
+            "title": "Seq",
+            "type": "integer"
+          },
+          "task_id": {
+            "format": "uuid",
+            "title": "Task Id",
+            "type": "string"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "title": "Timestamp",
+            "type": "string"
+          },
+          "turn_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Turn Id"
+          },
+          "type": {
+            "const": "conversion.finished",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "seq",
+          "task_id",
+          "turn_id",
+          "job_id",
+          "timestamp",
+          "type",
+          "data"
+        ],
+        "title": "ConversionFinishedEvent",
+        "type": "object"
+      },
+      "ConversionFinishedEventData": {
+        "additionalProperties": false,
+        "properties": {
+          "source_format": {
+            "$ref": "#/components/schemas/SupportedFormat"
+          },
+          "status": {
+            "enum": [
+              "succeeded",
+              "warning",
+              "failed"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "target_format": {
+            "$ref": "#/components/schemas/SupportedFormat"
+          }
+        },
+        "required": [
+          "source_format",
+          "target_format",
+          "status"
+        ],
+        "title": "ConversionFinishedEventData",
+        "type": "object"
+      },
+      "ConversionStartedEvent": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ConversionStartedEventData"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "seq": {
+            "minimum": 1,
+            "title": "Seq",
+            "type": "integer"
+          },
+          "task_id": {
+            "format": "uuid",
+            "title": "Task Id",
+            "type": "string"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "title": "Timestamp",
+            "type": "string"
+          },
+          "turn_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Turn Id"
+          },
+          "type": {
+            "const": "conversion.started",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "seq",
+          "task_id",
+          "turn_id",
+          "job_id",
+          "timestamp",
+          "type",
+          "data"
+        ],
+        "title": "ConversionStartedEvent",
+        "type": "object"
+      },
+      "ConversionStartedEventData": {
+        "additionalProperties": false,
+        "properties": {
+          "source_format": {
+            "$ref": "#/components/schemas/SupportedFormat"
+          },
+          "target_format": {
+            "$ref": "#/components/schemas/SupportedFormat"
+          }
+        },
+        "required": [
+          "source_format",
+          "target_format"
+        ],
+        "title": "ConversionStartedEventData",
+        "type": "object"
+      },
+      "DependencyState": {
+        "enum": [
+          "ready",
+          "waiting",
+          "blocked"
+        ],
+        "title": "DependencyState",
+        "type": "string"
+      },
+      "ErrorCode": {
+        "enum": [
+          "UNSUPPORTED_FILE_TYPE",
+          "FILE_TOO_LARGE",
+          "FILE_COUNT_EXCEEDED",
+          "ENCRYPTED_FILE",
+          "MACRO_FILE_REJECTED",
+          "MALFORMED_FILE",
+          "PAGE_LIMIT_EXCEEDED",
+          "ROW_LIMIT_EXCEEDED",
+          "TEXT_FILE_TOO_LARGE",
+          "TEXT_ENCODING_UNCERTAIN",
+          "INVALID_TEXT_ENCODING",
+          "CSV_DIALECT_UNCERTAIN",
+          "IMAGE_PIXEL_LIMIT_EXCEEDED",
+          "IMAGE_DIMENSION_LIMIT_EXCEEDED",
+          "IMAGE_DECODE_FAILED",
+          "UNSUPPORTED_CONVERSION",
+          "CONVERSION_VALIDATION_FAILED",
+          "JOB_LIMIT_EXCEEDED",
+          "JOB_DEPENDENCY_DEPTH_EXCEEDED",
+          "JOB_DEPENDENCY_CYCLE",
+          "JOB_INPUT_UNAVAILABLE",
+          "TEMPLATE_DIAGNOSTIC_BLOCKED",
+          "TEMPLATE_MAPPING_REQUIRED",
+          "GENERATION_SPEC_INVALID",
+          "QUEUE_FULL",
+          "MODEL_UNAVAILABLE",
+          "MODEL_OUTPUT_INVALID",
+          "TOOL_TIMEOUT",
+          "TOOL_FAILED",
+          "VALIDATION_FAILED",
+          "PATH_FORBIDDEN",
+          "TASK_NOT_READY",
+          "ARTIFACT_NOT_AVAILABLE",
+          "RESULT_GROUP_UNAVAILABLE",
+          "EVENT_CURSOR_INVALID",
+          "IDEMPOTENCY_CONFLICT"
+        ],
+        "title": "ErrorCode",
+        "type": "string"
+      },
+      "ErrorResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "$ref": "#/components/schemas/ErrorCode"
+          },
+          "details": {
+            "additionalProperties": true,
+            "title": "Details",
+            "type": "object"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "request_id": {
+            "format": "uuid",
+            "title": "Request Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "details",
+          "request_id"
+        ],
+        "title": "ErrorResponse",
+        "type": "object"
+      },
+      "EventPreview": {
+        "additionalProperties": false,
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "event_id": {
+            "minimum": 1,
+            "title": "Event Id",
+            "type": "integer"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "severity": {
+            "title": "Severity",
+            "type": "string"
+          },
+          "type": {
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "event_id",
+          "type",
+          "message",
+          "severity",
+          "created_at"
+        ],
+        "title": "EventPreview",
+        "type": "object"
+      },
+      "ExecutionEvent": {
+        "discriminator": {
+          "mapping": {
+            "artifact.ready": "#/components/schemas/ArtifactReadyEvent",
+            "clarification.required": "#/components/schemas/ClarificationRequiredEvent",
+            "conversion.finished": "#/components/schemas/ConversionFinishedEvent",
+            "conversion.started": "#/components/schemas/ConversionStartedEvent",
+            "heartbeat": "#/components/schemas/HeartbeatEvent",
+            "job.blocked": "#/components/schemas/JobBlockedEvent",
+            "job.status": "#/components/schemas/JobStatusEvent",
+            "job.waiting": "#/components/schemas/JobWaitingEvent",
+            "plan.created": "#/components/schemas/PlanCreatedEvent",
+            "task.finished": "#/components/schemas/TaskFinishedEvent",
+            "task.queued": "#/components/schemas/TaskQueuedEvent",
+            "task.started": "#/components/schemas/TaskStartedEvent",
+            "template.diagnosed": "#/components/schemas/TemplateDiagnosedEvent",
+            "tool.finished": "#/components/schemas/ToolFinishedEvent",
+            "tool.started": "#/components/schemas/ToolStartedEvent",
+            "turn.finished": "#/components/schemas/TurnFinishedEvent",
+            "validation.finished": "#/components/schemas/ValidationFinishedEvent"
+          },
+          "propertyName": "type"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/TaskQueuedEvent"
+          },
+          {
+            "$ref": "#/components/schemas/TaskStartedEvent"
+          },
+          {
+            "$ref": "#/components/schemas/PlanCreatedEvent"
+          },
+          {
+            "$ref": "#/components/schemas/ClarificationRequiredEvent"
+          },
+          {
+            "$ref": "#/components/schemas/JobWaitingEvent"
+          },
+          {
+            "$ref": "#/components/schemas/JobStatusEvent"
+          },
+          {
+            "$ref": "#/components/schemas/JobBlockedEvent"
+          },
+          {
+            "$ref": "#/components/schemas/TemplateDiagnosedEvent"
+          },
+          {
+            "$ref": "#/components/schemas/ConversionStartedEvent"
+          },
+          {
+            "$ref": "#/components/schemas/ConversionFinishedEvent"
+          },
+          {
+            "$ref": "#/components/schemas/ToolStartedEvent"
+          },
+          {
+            "$ref": "#/components/schemas/ToolFinishedEvent"
+          },
+          {
+            "$ref": "#/components/schemas/ValidationFinishedEvent"
+          },
+          {
+            "$ref": "#/components/schemas/ArtifactReadyEvent"
+          },
+          {
+            "$ref": "#/components/schemas/TurnFinishedEvent"
+          },
+          {
+            "$ref": "#/components/schemas/TaskFinishedEvent"
+          },
+          {
+            "$ref": "#/components/schemas/HeartbeatEvent"
+          }
+        ]
+      },
+      "FileRole": {
+        "enum": [
+          "source_file",
+          "conversion_input",
+          "template",
+          "data_source",
+          "reference_image"
+        ],
+        "title": "FileRole",
+        "type": "string"
+      },
+      "FileRoleSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "confidence": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Confidence",
+            "type": "number"
+          },
+          "evidence": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Evidence",
+            "type": "array"
+          },
+          "role": {
+            "$ref": "#/components/schemas/FileRole"
+          }
+        },
+        "required": [
+          "role",
+          "confidence"
+        ],
+        "title": "FileRoleSummary",
+        "type": "object"
+      },
+      "HealthStatus": {
+        "additionalProperties": false,
+        "properties": {
+          "application": {
+            "title": "Application",
+            "type": "string"
+          },
+          "database": {
+            "title": "Database",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "database",
+          "application"
+        ],
+        "title": "HealthStatus",
+        "type": "object"
+      },
+      "HeartbeatEvent": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/HeartbeatEventData"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "seq": {
+            "minimum": 1,
+            "title": "Seq",
+            "type": "integer"
+          },
+          "task_id": {
+            "format": "uuid",
+            "title": "Task Id",
+            "type": "string"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "title": "Timestamp",
+            "type": "string"
+          },
+          "turn_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Turn Id"
+          },
+          "type": {
+            "const": "heartbeat",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "seq",
+          "task_id",
+          "turn_id",
+          "job_id",
+          "timestamp",
+          "type",
+          "data"
+        ],
+        "title": "HeartbeatEvent",
+        "type": "object"
+      },
+      "HeartbeatEventData": {
+        "additionalProperties": false,
+        "properties": {
+          "interval_seconds": {
+            "default": 15,
+            "minimum": 1,
+            "title": "Interval Seconds",
+            "type": "integer"
+          }
+        },
+        "title": "HeartbeatEventData",
+        "type": "object"
+      },
+      "ImagePreflight": {
+        "additionalProperties": false,
+        "properties": {
+          "color_mode": {
+            "title": "Color Mode",
+            "type": "string"
+          },
+          "format": {
+            "$ref": "#/components/schemas/SupportedFormat"
+          },
+          "has_alpha": {
+            "title": "Has Alpha",
+            "type": "boolean"
+          },
+          "logical_height": {
+            "exclusiveMinimum": 0,
+            "title": "Logical Height",
+            "type": "integer"
+          },
+          "logical_width": {
+            "exclusiveMinimum": 0,
+            "title": "Logical Width",
+            "type": "integer"
+          },
+          "orientation": {
+            "title": "Orientation",
+            "type": "integer"
+          },
+          "source_height": {
+            "exclusiveMinimum": 0,
+            "title": "Source Height",
+            "type": "integer"
+          },
+          "source_width": {
+            "exclusiveMinimum": 0,
+            "title": "Source Width",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "format",
+          "logical_width",
+          "logical_height",
+          "source_width",
+          "source_height",
+          "orientation",
+          "color_mode",
+          "has_alpha"
+        ],
+        "title": "ImagePreflight",
+        "type": "object"
+      },
+      "JobBlockedEvent": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/JobBlockedEventData"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "seq": {
+            "minimum": 1,
+            "title": "Seq",
+            "type": "integer"
+          },
+          "task_id": {
+            "format": "uuid",
+            "title": "Task Id",
+            "type": "string"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "title": "Timestamp",
+            "type": "string"
+          },
+          "turn_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Turn Id"
+          },
+          "type": {
+            "const": "job.blocked",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "seq",
+          "task_id",
+          "turn_id",
+          "job_id",
+          "timestamp",
+          "type",
+          "data"
+        ],
+        "title": "JobBlockedEvent",
+        "type": "object"
+      },
+      "JobBlockedEventData": {
+        "additionalProperties": false,
+        "properties": {
+          "blocked_reason": {
+            "title": "Blocked Reason",
+            "type": "string"
+          }
+        },
+        "required": [
+          "blocked_reason"
+        ],
+        "title": "JobBlockedEventData",
+        "type": "object"
+      },
+      "JobInputRef": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "upload",
+              "artifact"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "ordinal": {
+            "minimum": 0,
+            "title": "Ordinal",
+            "type": "integer"
+          },
+          "role": {
+            "$ref": "#/components/schemas/FileRole"
+          }
+        },
+        "required": [
+          "kind",
+          "id",
+          "role",
+          "ordinal"
+        ],
+        "title": "JobInputRef",
+        "type": "object"
+      },
+      "JobStatus": {
+        "enum": [
+          "planned",
+          "waiting_dependency",
+          "analyzing",
+          "profiling_template",
+          "converting",
+          "generating",
+          "modifying",
+          "validating",
+          "repairing",
+          "succeeded",
+          "warning",
+          "failed",
+          "blocked",
+          "interrupted"
+        ],
+        "title": "JobStatus",
+        "type": "string"
+      },
+      "JobStatusEvent": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/JobStatusEventData"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "seq": {
+            "minimum": 1,
+            "title": "Seq",
+            "type": "integer"
+          },
+          "task_id": {
+            "format": "uuid",
+            "title": "Task Id",
+            "type": "string"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "title": "Timestamp",
+            "type": "string"
+          },
+          "turn_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Turn Id"
+          },
+          "type": {
+            "const": "job.status",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "seq",
+          "task_id",
+          "turn_id",
+          "job_id",
+          "timestamp",
+          "type",
+          "data"
+        ],
+        "title": "JobStatusEvent",
+        "type": "object"
+      },
+      "JobStatusEventData": {
+        "additionalProperties": false,
+        "properties": {
+          "dependency_state": {
+            "$ref": "#/components/schemas/DependencyState"
+          },
+          "status": {
+            "$ref": "#/components/schemas/JobStatus"
+          }
+        },
+        "required": [
+          "status",
+          "dependency_state"
+        ],
+        "title": "JobStatusEventData",
+        "type": "object"
+      },
+      "JobSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "blocked_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Blocked Reason"
+          },
+          "dependency_state": {
+            "$ref": "#/components/schemas/DependencyState"
+          },
+          "depends_on": {
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "title": "Depends On",
+            "type": "array"
+          },
+          "goal": {
+            "title": "Goal",
+            "type": "string"
+          },
+          "input_refs": {
+            "items": {
+              "$ref": "#/components/schemas/JobInputRef"
+            },
+            "title": "Input Refs",
+            "type": "array"
+          },
+          "job_id": {
+            "format": "uuid",
+            "title": "Job Id",
+            "type": "string"
+          },
+          "job_type": {
+            "$ref": "#/components/schemas/JobType"
+          },
+          "result_artifact_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Result Artifact Id"
+          },
+          "result_artifact_ids": {
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "title": "Result Artifact Ids",
+            "type": "array"
+          },
+          "result_group_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Result Group Id"
+          },
+          "status": {
+            "$ref": "#/components/schemas/JobStatus"
+          },
+          "target_format": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SupportedFormat"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Warnings",
+            "type": "array"
+          }
+        },
+        "required": [
+          "job_id",
+          "job_type",
+          "goal",
+          "status",
+          "dependency_state"
+        ],
+        "title": "JobSummary",
+        "type": "object"
+      },
+      "JobType": {
+        "enum": [
+          "read",
+          "edit",
+          "convert",
+          "template_generate",
+          "generate_from_scratch",
+          "image_compose"
+        ],
+        "title": "JobType",
+        "type": "string"
+      },
+      "JobWaitingEvent": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/JobWaitingEventData"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "seq": {
+            "minimum": 1,
+            "title": "Seq",
+            "type": "integer"
+          },
+          "task_id": {
+            "format": "uuid",
+            "title": "Task Id",
+            "type": "string"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "title": "Timestamp",
+            "type": "string"
+          },
+          "turn_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Turn Id"
+          },
+          "type": {
+            "const": "job.waiting",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "seq",
+          "task_id",
+          "turn_id",
+          "job_id",
+          "timestamp",
+          "type",
+          "data"
+        ],
+        "title": "JobWaitingEvent",
+        "type": "object"
+      },
+      "JobWaitingEventData": {
+        "additionalProperties": false,
+        "properties": {
+          "depends_on": {
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "title": "Depends On",
+            "type": "array"
+          }
+        },
+        "required": [
+          "depends_on"
+        ],
+        "title": "JobWaitingEventData",
+        "type": "object"
+      },
+      "JsonValue": {},
+      "PlanCreatedEvent": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/PlanCreatedEventData"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "seq": {
+            "minimum": 1,
+            "title": "Seq",
+            "type": "integer"
+          },
+          "task_id": {
+            "format": "uuid",
+            "title": "Task Id",
+            "type": "string"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "title": "Timestamp",
+            "type": "string"
+          },
+          "turn_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Turn Id"
+          },
+          "type": {
+            "const": "plan.created",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "seq",
+          "task_id",
+          "turn_id",
+          "job_id",
+          "timestamp",
+          "type",
+          "data"
+        ],
+        "title": "PlanCreatedEvent",
+        "type": "object"
+      },
+      "PlanCreatedEventData": {
+        "additionalProperties": false,
+        "properties": {
+          "job_count": {
+            "maximum": 20,
+            "minimum": 1,
+            "title": "Job Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "job_count"
+        ],
+        "title": "PlanCreatedEventData",
+        "type": "object"
+      },
+      "ResultGroupSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "artifact_ids": {
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "title": "Artifact Ids",
+            "type": "array"
+          },
+          "job_id": {
+            "format": "uuid",
+            "title": "Job Id",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "result_group_id": {
+            "format": "uuid",
+            "title": "Result Group Id",
+            "type": "string"
+          },
+          "state": {
+            "$ref": "#/components/schemas/ArtifactState"
+          },
+          "target_format": {
+            "$ref": "#/components/schemas/SupportedFormat"
+          }
+        },
+        "required": [
+          "result_group_id",
+          "job_id",
+          "target_format",
+          "label",
+          "state"
+        ],
+        "title": "ResultGroupSummary",
+        "type": "object"
+      },
+      "SupportedFormat": {
+        "enum": [
+          "docx",
+          "xlsx",
+          "pptx",
+          "pdf",
+          "csv",
+          "md",
+          "txt",
+          "png",
+          "jpeg",
+          "webp"
+        ],
+        "title": "SupportedFormat",
+        "type": "string"
+      },
+      "TaskDetail": {
+        "additionalProperties": false,
+        "properties": {
+          "aggregate": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JsonValue"
+            },
+            "title": "Aggregate",
+            "type": "object"
+          },
+          "artifacts": {
+            "items": {
+              "$ref": "#/components/schemas/ArtifactSummary"
+            },
+            "title": "Artifacts",
+            "type": "array"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "current_turn_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Turn Id"
+          },
+          "finished_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Finished At"
+          },
+          "jobs": {
+            "items": {
+              "$ref": "#/components/schemas/JobSummary"
+            },
+            "title": "Jobs",
+            "type": "array"
+          },
+          "recent_events": {
+            "items": {
+              "$ref": "#/components/schemas/EventPreview"
+            },
+            "title": "Recent Events",
+            "type": "array"
+          },
+          "result_groups": {
+            "items": {
+              "$ref": "#/components/schemas/ResultGroupSummary"
+            },
+            "title": "Result Groups",
+            "type": "array"
+          },
+          "started_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Started At"
+          },
+          "status": {
+            "$ref": "#/components/schemas/TaskStatus"
+          },
+          "task_id": {
+            "format": "uuid",
+            "title": "Task Id",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "turns": {
+            "items": {
+              "$ref": "#/components/schemas/TurnSummary"
+            },
+            "title": "Turns",
+            "type": "array"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "uploaded_files": {
+            "items": {
+              "$ref": "#/components/schemas/UploadedFileSummary"
+            },
+            "title": "Uploaded Files",
+            "type": "array"
+          }
+        },
+        "required": [
+          "task_id",
+          "title",
+          "status",
+          "current_turn_id",
+          "aggregate",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "TaskDetail",
+        "type": "object"
+      },
+      "TaskFinishedEvent": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/TaskFinishedEventData"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "seq": {
+            "minimum": 1,
+            "title": "Seq",
+            "type": "integer"
+          },
+          "task_id": {
+            "format": "uuid",
+            "title": "Task Id",
+            "type": "string"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "title": "Timestamp",
+            "type": "string"
+          },
+          "turn_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Turn Id"
+          },
+          "type": {
+            "const": "task.finished",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "seq",
+          "task_id",
+          "turn_id",
+          "job_id",
+          "timestamp",
+          "type",
+          "data"
+        ],
+        "title": "TaskFinishedEvent",
+        "type": "object"
+      },
+      "TaskFinishedEventData": {
+        "additionalProperties": false,
+        "properties": {
+          "task_status": {
+            "$ref": "#/components/schemas/TaskStatus"
+          }
+        },
+        "required": [
+          "task_status"
+        ],
+        "title": "TaskFinishedEventData",
+        "type": "object"
+      },
+      "TaskKind": {
+        "enum": [
+          "read",
+          "edit",
+          "convert",
+          "image_compose",
+          "template_generate",
+          "generate_from_scratch"
+        ],
+        "title": "TaskKind",
+        "type": "string"
+      },
+      "TaskQueuedEvent": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/TaskQueuedEventData"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "seq": {
+            "minimum": 1,
+            "title": "Seq",
+            "type": "integer"
+          },
+          "task_id": {
+            "format": "uuid",
+            "title": "Task Id",
+            "type": "string"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "title": "Timestamp",
+            "type": "string"
+          },
+          "turn_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Turn Id"
+          },
+          "type": {
+            "const": "task.queued",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "seq",
+          "task_id",
+          "turn_id",
+          "job_id",
+          "timestamp",
+          "type",
+          "data"
+        ],
+        "title": "TaskQueuedEvent",
+        "type": "object"
+      },
+      "TaskQueuedEventData": {
+        "additionalProperties": false,
+        "properties": {
+          "queue_position": {
+            "minimum": 0,
+            "title": "Queue Position",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "queue_position"
+        ],
+        "title": "TaskQueuedEventData",
+        "type": "object"
+      },
+      "TaskStartedEvent": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/TaskStartedEventData"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "seq": {
+            "minimum": 1,
+            "title": "Seq",
+            "type": "integer"
+          },
+          "task_id": {
+            "format": "uuid",
+            "title": "Task Id",
+            "type": "string"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "title": "Timestamp",
+            "type": "string"
+          },
+          "turn_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Turn Id"
+          },
+          "type": {
+            "const": "task.started",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "seq",
+          "task_id",
+          "turn_id",
+          "job_id",
+          "timestamp",
+          "type",
+          "data"
+        ],
+        "title": "TaskStartedEvent",
+        "type": "object"
+      },
+      "TaskStartedEventData": {
+        "additionalProperties": false,
+        "properties": {
+          "worker_id": {
+            "title": "Worker Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "worker_id"
+        ],
+        "title": "TaskStartedEventData",
+        "type": "object"
+      },
+      "TaskStatus": {
+        "enum": [
+          "queued",
+          "running",
+          "waiting_dependency",
+          "validating",
+          "repairing",
+          "awaiting_clarification",
+          "succeeded",
+          "partial_success",
+          "warning",
+          "failed",
+          "interrupted",
+          "deleting"
+        ],
+        "title": "TaskStatus",
+        "type": "string"
+      },
+      "TaskSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/TaskStatus"
+          },
+          "task_id": {
+            "format": "uuid",
+            "title": "Task Id",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "task_id",
+          "title",
+          "status",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "TaskSummary",
+        "type": "object"
+      },
+      "TemplateDiagnosedEvent": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/TemplateDiagnosedEventData"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "seq": {
+            "minimum": 1,
+            "title": "Seq",
+            "type": "integer"
+          },
+          "task_id": {
+            "format": "uuid",
+            "title": "Task Id",
+            "type": "string"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "title": "Timestamp",
+            "type": "string"
+          },
+          "turn_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Turn Id"
+          },
+          "type": {
+            "const": "template.diagnosed",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "seq",
+          "task_id",
+          "turn_id",
+          "job_id",
+          "timestamp",
+          "type",
+          "data"
+        ],
+        "title": "TemplateDiagnosedEvent",
+        "type": "object"
+      },
+      "TemplateDiagnosedEventData": {
+        "additionalProperties": false,
+        "properties": {
+          "inspection_id": {
+            "format": "uuid",
+            "title": "Inspection Id",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "succeeded",
+              "warning",
+              "blocked",
+              "failed"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "inspection_id",
+          "status"
+        ],
+        "title": "TemplateDiagnosedEventData",
+        "type": "object"
+      },
+      "TextEncodingPreflight": {
+        "additionalProperties": false,
+        "properties": {
+          "confidence": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Confidence",
+            "type": "number"
+          },
+          "requires_confirmation": {
+            "title": "Requires Confirmation",
+            "type": "boolean"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "value": {
+            "title": "Value",
+            "type": "string"
+          }
+        },
+        "required": [
+          "value",
+          "confidence",
+          "source",
+          "requires_confirmation"
+        ],
+        "title": "TextEncodingPreflight",
+        "type": "object"
+      },
+      "ToolFinishedEvent": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ToolFinishedEventData"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "seq": {
+            "minimum": 1,
+            "title": "Seq",
+            "type": "integer"
+          },
+          "task_id": {
+            "format": "uuid",
+            "title": "Task Id",
+            "type": "string"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "title": "Timestamp",
+            "type": "string"
+          },
+          "turn_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Turn Id"
+          },
+          "type": {
+            "const": "tool.finished",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "seq",
+          "task_id",
+          "turn_id",
+          "job_id",
+          "timestamp",
+          "type",
+          "data"
+        ],
+        "title": "ToolFinishedEvent",
+        "type": "object"
+      },
+      "ToolFinishedEventData": {
+        "additionalProperties": false,
+        "properties": {
+          "duration_ms": {
+            "minimum": 0,
+            "title": "Duration Ms",
+            "type": "integer"
+          },
+          "status": {
+            "enum": [
+              "succeeded",
+              "warning",
+              "failed"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "tool_name": {
+            "title": "Tool Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "tool_name",
+          "status",
+          "duration_ms"
+        ],
+        "title": "ToolFinishedEventData",
+        "type": "object"
+      },
+      "ToolStartedEvent": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ToolStartedEventData"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "seq": {
+            "minimum": 1,
+            "title": "Seq",
+            "type": "integer"
+          },
+          "task_id": {
+            "format": "uuid",
+            "title": "Task Id",
+            "type": "string"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "title": "Timestamp",
+            "type": "string"
+          },
+          "turn_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Turn Id"
+          },
+          "type": {
+            "const": "tool.started",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "seq",
+          "task_id",
+          "turn_id",
+          "job_id",
+          "timestamp",
+          "type",
+          "data"
+        ],
+        "title": "ToolStartedEvent",
+        "type": "object"
+      },
+      "ToolStartedEventData": {
+        "additionalProperties": false,
+        "properties": {
+          "tool_name": {
+            "title": "Tool Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "tool_name"
+        ],
+        "title": "ToolStartedEventData",
+        "type": "object"
+      },
+      "TurnFinishedEvent": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/TurnFinishedEventData"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "seq": {
+            "minimum": 1,
+            "title": "Seq",
+            "type": "integer"
+          },
+          "task_id": {
+            "format": "uuid",
+            "title": "Task Id",
+            "type": "string"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "title": "Timestamp",
+            "type": "string"
+          },
+          "turn_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Turn Id"
+          },
+          "type": {
+            "const": "turn.finished",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "seq",
+          "task_id",
+          "turn_id",
+          "job_id",
+          "timestamp",
+          "type",
+          "data"
+        ],
+        "title": "TurnFinishedEvent",
+        "type": "object"
+      },
+      "TurnFinishedEventData": {
+        "additionalProperties": false,
+        "properties": {
+          "turn_status": {
+            "$ref": "#/components/schemas/TurnStatus"
+          }
+        },
+        "required": [
+          "turn_status"
+        ],
+        "title": "TurnFinishedEventData",
+        "type": "object"
+      },
+      "TurnStatus": {
+        "enum": [
+          "queued",
+          "planning",
+          "awaiting_clarification",
+          "running",
+          "waiting_dependency",
+          "validating",
+          "repairing",
+          "succeeded",
+          "partial_success",
+          "warning",
+          "failed",
+          "interrupted",
+          "cancelled"
+        ],
+        "title": "TurnStatus",
+        "type": "string"
+      },
+      "TurnSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "finished_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Finished At"
+          },
+          "instruction": {
+            "title": "Instruction",
+            "type": "string"
+          },
+          "sequence": {
+            "minimum": 1,
+            "title": "Sequence",
+            "type": "integer"
+          },
+          "started_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Started At"
+          },
+          "status": {
+            "$ref": "#/components/schemas/TurnStatus"
+          },
+          "task_kinds": {
+            "items": {
+              "$ref": "#/components/schemas/TaskKind"
+            },
+            "title": "Task Kinds",
+            "type": "array"
+          },
+          "turn_id": {
+            "format": "uuid",
+            "title": "Turn Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "turn_id",
+          "sequence",
+          "instruction",
+          "status",
+          "created_at"
+        ],
+        "title": "TurnSummary",
+        "type": "object"
+      },
+      "UploadPreflight": {
+        "additionalProperties": false,
+        "properties": {
+          "image": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ImagePreflight"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "page_count": {
+            "anyOf": [
+              {
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Page Count"
+          },
+          "row_count": {
+            "anyOf": [
+              {
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Row Count"
+          },
+          "slide_count": {
+            "anyOf": [
+              {
+                "minimum": 0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Slide Count"
+          },
+          "template_candidate": {
+            "default": false,
+            "title": "Template Candidate",
+            "type": "boolean"
+          },
+          "text_encoding": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TextEncodingPreflight"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Warnings",
+            "type": "array"
+          }
+        },
+        "title": "UploadPreflight",
+        "type": "object"
+      },
+      "UploadRecord": {
+        "additionalProperties": false,
+        "properties": {
+          "expires_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expires At"
+          },
+          "format": {
+            "$ref": "#/components/schemas/SupportedFormat"
+          },
+          "original_name": {
+            "title": "Original Name",
+            "type": "string"
+          },
+          "preflight": {
+            "$ref": "#/components/schemas/UploadPreflight"
+          },
+          "sha256": {
+            "title": "Sha256",
+            "type": "string"
+          },
+          "size_bytes": {
+            "minimum": 0,
+            "title": "Size Bytes",
+            "type": "integer"
+          },
+          "status": {
+            "$ref": "#/components/schemas/UploadStatus"
+          },
+          "upload_id": {
+            "format": "uuid",
+            "title": "Upload Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "upload_id",
+          "original_name",
+          "format",
+          "size_bytes",
+          "sha256",
+          "status",
+          "preflight",
+          "expires_at"
+        ],
+        "title": "UploadRecord",
+        "type": "object"
+      },
+      "UploadStatus": {
+        "enum": [
+          "staged",
+          "validating",
+          "validated",
+          "rejected",
+          "consumed",
+          "expired",
+          "deleting"
+        ],
+        "title": "UploadStatus",
+        "type": "string"
+      },
+      "UploadedFileSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "candidate_roles": {
+            "items": {
+              "$ref": "#/components/schemas/FileRoleSummary"
+            },
+            "title": "Candidate Roles",
+            "type": "array"
+          },
+          "file_id": {
+            "format": "uuid",
+            "title": "File Id",
+            "type": "string"
+          },
+          "format": {
+            "$ref": "#/components/schemas/SupportedFormat"
+          },
+          "original_name": {
+            "title": "Original Name",
+            "type": "string"
+          },
+          "selected_role": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/FileRole"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "sha256": {
+            "title": "Sha256",
+            "type": "string"
+          },
+          "size_bytes": {
+            "minimum": 0,
+            "title": "Size Bytes",
+            "type": "integer"
+          },
+          "upload_id": {
+            "format": "uuid",
+            "title": "Upload Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "file_id",
+          "upload_id",
+          "original_name",
+          "format",
+          "size_bytes",
+          "sha256"
+        ],
+        "title": "UploadedFileSummary",
+        "type": "object"
+      },
+      "ValidationFinishedEvent": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/ValidationFinishedEventData"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "seq": {
+            "minimum": 1,
+            "title": "Seq",
+            "type": "integer"
+          },
+          "task_id": {
+            "format": "uuid",
+            "title": "Task Id",
+            "type": "string"
+          },
+          "timestamp": {
+            "format": "date-time",
+            "title": "Timestamp",
+            "type": "string"
+          },
+          "turn_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Turn Id"
+          },
+          "type": {
+            "const": "validation.finished",
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "seq",
+          "task_id",
+          "turn_id",
+          "job_id",
+          "timestamp",
+          "type",
+          "data"
+        ],
+        "title": "ValidationFinishedEvent",
+        "type": "object"
+      },
+      "ValidationFinishedEventData": {
+        "additionalProperties": false,
+        "properties": {
+          "status": {
+            "enum": [
+              "passed",
+              "warning",
+              "failed"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "validator": {
+            "title": "Validator",
+            "type": "string"
+          }
+        },
+        "required": [
+          "validator",
+          "status"
+        ],
+        "title": "ValidationFinishedEventData",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "title": "文档处理办公 Agent API",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthStatus"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Health"
+      }
+    }
+  }
+}

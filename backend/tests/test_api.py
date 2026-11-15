@@ -1,7 +1,7 @@
 # pyright: basic
 
 from app.api.errors import AppError, ErrorCode, install_exception_handlers
-from app.api.main import app
+from app.api.main import app, create_app
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
@@ -13,6 +13,17 @@ def test_health_reports_application_status() -> None:
     assert response.json()["status"] == "ok"
     assert response.json()["database"] == "ok"
     assert response.headers["X-Request-ID"]
+
+
+def test_health_initializes_configured_database(monkeypatch, tmp_path) -> None:
+    monkeypatch.setenv("DOC_AGENT_DATA_DIR", str(tmp_path))
+    local_app = create_app()
+
+    response = TestClient(local_app).get("/health")
+
+    assert response.status_code == 200
+    assert response.json()["database"] == "ok"
+    assert (tmp_path / "app.db").exists()
 
 
 def test_openapi_endpoint_exports_core_schemas() -> None:

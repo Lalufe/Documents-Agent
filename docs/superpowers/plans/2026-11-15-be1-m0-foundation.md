@@ -496,7 +496,7 @@ git commit -m "feat: define BE1 API and event contracts"
 - Produces: `create_engine_for_path(database_path: Path) -> Engine`, `create_session_factory(engine: Engine) -> sessionmaker[Session]`, and `get_session() -> Iterator[Session]`.
 - Produces: `backend/app/infrastructure/db/models/__init__.py` that imports every model so Alembic metadata is complete.
 
-- [ ] **Step 1: Write failing database runtime tests**
+- [x] **Step 1: Write failing database runtime tests**
 
 ```python
 # backend/tests/test_database_runtime.py
@@ -517,13 +517,13 @@ def test_sqlite_connection_enables_required_pragmas(tmp_path: Path) -> None:
         assert connection.execute(text("PRAGMA synchronous")).scalar_one() == 1
 ```
 
-- [ ] **Step 2: Run the runtime test to verify it fails**
+- [x] **Step 2: Run the runtime test to verify it fails**
 
 Run: `uv run pytest backend/tests/test_database_runtime.py -v`
 
 Expected: collection fails because `app.infrastructure.db.engine` does not exist.
 
-- [ ] **Step 3: Implement the database base, engine, and session factory**
+- [x] **Step 3: Implement the database base, engine, and session factory**
 
 `base.py` defines:
 
@@ -543,13 +543,13 @@ PRAGMA synchronous = NORMAL;
 
 `session.py` provides an `expire_on_commit=False` session factory and an iterator dependency that rolls back on exceptions and always closes the session.
 
-- [ ] **Step 4: Run the runtime test to verify it passes**
+- [x] **Step 4: Run the runtime test to verify it passes**
 
 Run: `uv run pytest backend/tests/test_database_runtime.py -v`
 
 Expected: pass.
 
-- [ ] **Step 5: Write failing migration and constraint tests**
+- [x] **Step 5: Write failing migration and constraint tests**
 
 ```python
 # backend/tests/test_migrations.py
@@ -690,13 +690,13 @@ def test_fts_table_and_triggers_exist(tmp_path: Path) -> None:
     }.issubset(trigger_names)
 ```
 
-- [ ] **Step 6: Run migration tests to verify they fail**
+- [x] **Step 6: Run migration tests to verify they fail**
 
 Run: `uv run pytest backend/tests/test_migrations.py -v`
 
 Expected: failures because Alembic configuration, models, and migration revision do not exist.
 
-- [ ] **Step 7: Implement all SQLAlchemy models**
+- [x] **Step 7: Implement all SQLAlchemy models**
 
 Create model classes for every table from `Design.md` sections 10.2-10.18. Use `String(36)` UUID primary keys, `JSON` for JSON columns, timezone-aware `DateTime(timezone=True)`, and `ondelete="CASCADE"` for business foreign keys.
 
@@ -712,7 +712,7 @@ Required constraints:
 
 Import every model in `models/__init__.py` and set Alembic `target_metadata = Base.metadata`.
 
-- [ ] **Step 8: Configure Alembic, generate the initial revision, and add FTS**
+- [x] **Step 8: Configure Alembic, generate the initial revision, and add FTS**
 
 Create root `alembic.ini` with `script_location = %(here)s/backend/migrations` and an overridden `sqlalchemy.url`. The root location preserves the documented `uv run alembic upgrade head` command.
 
@@ -754,23 +754,23 @@ END;
 
 The downgrade drops triggers and the FTS table before dropping ordinary tables.
 
-- [ ] **Step 9: Connect `/health` to the database**
+- [x] **Step 9: Connect `/health` to the database**
 
 Resolve `DOC_AGENT_DATA_DIR`, default to `./data`, create the directory, resolve the database path under that root, and lazily create the engine. `/health` executes `SELECT 1`. If the database check fails, return status 503 with `database: "error"` while preserving the standard error response contract for API errors.
 
-- [ ] **Step 10: Run the migration and database tests to verify they pass**
+- [x] **Step 10: Run the migration and database tests to verify they pass**
 
 Run: `uv run pytest backend/tests/test_database_runtime.py backend/tests/test_migrations.py -v`
 
 Expected: all tests pass.
 
-- [ ] **Step 11: Run the full backend suite**
+- [x] **Step 11: Run the full backend suite**
 
 Run: `uv run pytest backend/tests -v`
 
 Expected: all tests pass.
 
-- [ ] **Step 12: Commit T03**
+- [x] **Step 12: Commit T03**
 
 ```powershell
 git add backend/app/infrastructure/db backend/app/api/main.py alembic.ini backend/migrations backend/tests

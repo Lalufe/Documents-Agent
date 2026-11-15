@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from app.api.errors import install_exception_handlers
 from app.api.routes.contracts import install_contract_components
 from app.api.routes.health import router as health_router
+from app.infrastructure.db.engine import create_engine_for_path, database_path_from_env
 
 
 def create_app() -> FastAPI:
@@ -12,6 +13,7 @@ def create_app() -> FastAPI:
         docs_url="/docs",
         openapi_url="/api/v1/openapi.json",
     )
+    application.state.database_engine = create_engine_for_path(database_path_from_env())
     install_exception_handlers(application)
     application.include_router(health_router)
     install_contract_components(application)

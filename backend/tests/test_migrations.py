@@ -181,3 +181,17 @@ def test_alembic_uses_configured_data_directory(
     command.upgrade(config, "head")
 
     assert (tmp_path / "app.db").exists()
+
+
+def test_alembic_uses_configured_database_path(
+    monkeypatch,
+    tmp_path: Path,
+) -> None:
+    monkeypatch.setenv("DOC_AGENT_DATA_DIR", str(tmp_path))
+    monkeypatch.setenv("DOC_AGENT_DB_PATH", "state/custom.db")
+    config = Config("alembic.ini")
+    config.set_main_option("script_location", "backend/migrations")
+
+    command.upgrade(config, "head")
+
+    assert (tmp_path / "state" / "custom.db").exists()

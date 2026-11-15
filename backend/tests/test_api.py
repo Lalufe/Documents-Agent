@@ -1,13 +1,38 @@
 # pyright: basic
 
+from pathlib import Path
+
+from alembic import command
+from alembic.config import Config
 from app.api.errors import AppError, ErrorCode, install_exception_handlers
-from app.api.main import app, create_app
+from app.api.main import create_app
+from app.api.schemas.common import OfficeHealth
+from app.settings import AppSettings
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 
-def test_health_reports_application_status() -> None:
-    response = TestClient(app).get("/health")
+def migrated_app(tmp_path: Path):
+    settings = AppSettings.from_env(
+        env={"DOC_AGENT_DATA_DIR": str(tmp_path)},
+        cwd=tmp_path,
+    )
+    config = Config("alembic.ini")
+    config.set_main_option("script_location", "backend/migrations")
+    config.set_main_option(
+        "sqlalchemy.url",
+        f"sqlite+pysqlite:///{settings.database_path.as_posix()}",
+    )
+    command.upgrade(config, "head")
+    return create_app(
+        settings=settings,
+        office_probe=lambda: OfficeHealth(status="unavailable", detail=None),
+    )
+
+
+def test_health_reports_application_status(tmp_path: Path) -> None:
+    with TestClient(migrated_app(tmp_path)) as client:
+        response = client.get("/health")
 
     assert response.status_code == 200
     assert response.json()["status"] == "ok"
@@ -15,19 +40,19 @@ def test_health_reports_application_status() -> None:
     assert response.headers["X-Request-ID"]
 
 
-def test_health_initializes_configured_database(monkeypatch, tmp_path) -> None:
-    monkeypatch.setenv("DOC_AGENT_DATA_DIR", str(tmp_path))
-    local_app = create_app()
-
-    response = TestClient(local_app).get("/health")
+def test_health_initializes_configured_database(tmp_path: Path) -> None:
+    local_app = migrated_app(tmp_path)
+    with TestClient(local_app) as client:
+        response = client.get("/health")
 
     assert response.status_code == 200
     assert response.json()["database"] == "ok"
     assert (tmp_path / "app.db").exists()
 
 
-def test_openapi_endpoint_exports_core_schemas() -> None:
-    response = TestClient(app).get("/api/v1/openapi.json")
+def test_openapi_endpoint_exports_core_schemas(tmp_path: Path) -> None:
+    with TestClient(migrated_app(tmp_path)) as client:
+        response = client.get("/api/v1/openapi.json")
 
     assert response.status_code == 200
     schema = response.json()

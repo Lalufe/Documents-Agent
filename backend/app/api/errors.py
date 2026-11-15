@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import logging
+import time
 from enum import StrEnum
 from uuid import UUID, uuid4
 
@@ -11,6 +13,7 @@ from starlette.middleware.base import RequestResponseEndpoint
 from starlette.responses import Response
 
 from app.api.schemas.common import ContractModel
+from app.infrastructure.observability import log_context, log_event
 
 
 class ErrorCode(StrEnum):
@@ -139,15 +142,39 @@ async def _request_id_middleware(
     request: Request,
     call_next: RequestResponseEndpoint,
 ) -> Response:
+    started = time.perf_counter()
     incoming = request.headers.get("X-Request-ID")
     try:
         request_id = UUID(incoming) if incoming is not None else uuid4()
     except ValueError:
         request_id = uuid4()
     request.state.request_id = request_id
-    response = await call_next(request)
-    response.headers["X-Request-ID"] = str(request_id)
-    return response
+    with log_context(request_id=str(request_id)):
+        try:
+            response = await call_next(request)
+        except Exception as exc:
+            route = getattr(request.scope.get("route"), "path", request.url.path)
+            log_event(
+                "http.request.failed",
+                level=logging.ERROR,
+                logger_name="doc_agent.request",
+                method=request.method,
+                route=route,
+                duration_ms=round((time.perf_counter() - started) * 1000),
+                error_type=type(exc).__name__,
+            )
+            raise
+        response.headers["X-Request-ID"] = str(request_id)
+        route = getattr(request.scope.get("route"), "path", request.url.path)
+        log_event(
+            "http.request.completed",
+            logger_name="doc_agent.request",
+            method=request.method,
+            route=route,
+            status_code=response.status_code,
+            duration_ms=round((time.perf_counter() - started) * 1000),
+        )
+        return response
 
 
 def install_exception_handlers(app: FastAPI) -> None:

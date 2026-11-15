@@ -789,7 +789,7 @@ git commit -m "feat: add SQLite schema and migrations"
 - Consumes: completed T01-T03.
 - Produces: verified feature branch and a pull request targeting `master`.
 
-- [ ] **Step 1: Run the complete quality gate**
+- [x] **Step 1: Run the complete quality gate**
 
 Run: `uv run ruff check .`
 
@@ -809,7 +809,7 @@ Run: `git diff --exit-code -- backend/openapi.json`
 
 Expected: every command exits with code 0 and the OpenAPI export produces no diff.
 
-- [ ] **Step 2: Verify the migration from an empty data directory**
+- [x] **Step 2: Verify the migration from an empty data directory**
 
 Run:
 
@@ -822,7 +822,7 @@ Test-Path (Join-Path $tempData "app.db")
 
 Expected: both the migration and file existence check succeed.
 
-- [ ] **Step 3: Review the branch diff and ensure no generated or sensitive files are staged**
+- [x] **Step 3: Review the branch diff and ensure no generated or sensitive files are staged**
 
 Run: `git status --short`
 

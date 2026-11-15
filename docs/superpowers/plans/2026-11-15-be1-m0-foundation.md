@@ -56,7 +56,7 @@
 - Produces: `app.api.main.create_app() -> FastAPI` and `app.api.main.app: FastAPI`.
 - Produces: pnpm scripts `typecheck` and `build` in `frontend/package.json`.
 
-- [ ] **Step 1: Write the failing bootstrap test**
+- [x] **Step 1: Write the failing bootstrap test**
 
 ```python
 # backend/tests/test_bootstrap.py
@@ -73,13 +73,13 @@ def test_create_app_returns_fastapi_application() -> None:
     assert app.docs_url == "/docs"
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 Run: `uv run pytest backend/tests/test_bootstrap.py -v`
 
 Expected: collection fails because the root package configuration or `app.api.main` does not exist.
 
-- [ ] **Step 3: Add the Python and frontend package skeleton**
+- [x] **Step 3: Add the Python and frontend package skeleton**
 
 Create `pyproject.toml` with:
 
@@ -172,7 +172,7 @@ DOC_AGENT_API_HOST=127.0.0.1
 DOC_AGENT_API_PORT=8000
 ```
 
-- [ ] **Step 4: Install dependencies and run the bootstrap checks**
+- [x] **Step 4: Install dependencies and run the bootstrap checks**
 
 Run: `uv sync`
 
@@ -186,7 +186,7 @@ Run: `pnpm --dir frontend build`
 
 Expected: all commands exit with code 0.
 
-- [ ] **Step 5: Commit T01**
+- [x] **Step 5: Commit T01**
 
 ```powershell
 git add .gitignore .env.example pyproject.toml uv.lock backend frontend data scripts
@@ -221,7 +221,7 @@ git commit -m "feat: scaffold BE1 application foundation"
 - Produces: `ExecutionEvent` as a discriminated union keyed by `type`.
 - Produces: `GET /health`, `GET /api/v1/openapi.json`, and `scripts.contracts.export_openapi.export_openapi(path: Path) -> None`.
 
-- [ ] **Step 1: Write failing common contract tests**
+- [x] **Step 1: Write failing common contract tests**
 
 ```python
 # backend/tests/test_contracts_common.py
@@ -272,13 +272,13 @@ def test_task_id_is_uuid() -> None:
     assert isinstance(summary.task_id, UUID)
 ```
 
-- [ ] **Step 2: Run the common contract tests to verify they fail**
+- [x] **Step 2: Run the common contract tests to verify they fail**
 
 Run: `uv run pytest backend/tests/test_contracts_common.py -v`
 
 Expected: collection fails because the error and schema modules do not exist.
 
-- [ ] **Step 3: Implement common, error, upload, and task contracts**
+- [x] **Step 3: Implement common, error, upload, and task contracts**
 
 `ErrorCode` must be a `StrEnum` containing every code from `Design.md` section 9.9. `ErrorResponse` uses `ConfigDict(extra="forbid")`.
 
@@ -315,13 +315,13 @@ Implement DTOs with UUID IDs, timezone-aware datetimes, and `extra="forbid"`:
 - `TaskSummary`, `TaskDetail`, `TurnSummary`, `JobSummary`
 - `ResultGroupSummary`, `ArtifactSummary`
 
-- [ ] **Step 4: Run the common contract tests to verify they pass**
+- [x] **Step 4: Run the common contract tests to verify they pass**
 
 Run: `uv run pytest backend/tests/test_contracts_common.py -v`
 
 Expected: all tests pass.
 
-- [ ] **Step 5: Write failing SSE union and API tests**
+- [x] **Step 5: Write failing SSE union and API tests**
 
 ```python
 # backend/tests/test_contracts_events.py
@@ -395,13 +395,13 @@ def test_openapi_endpoint_exports_core_schemas() -> None:
     assert "TaskDetail" in schema["components"]["schemas"]
 ```
 
-- [ ] **Step 6: Run SSE and API tests to verify they fail**
+- [x] **Step 6: Run SSE and API tests to verify they fail**
 
 Run: `uv run pytest backend/tests/test_contracts_events.py backend/tests/test_api.py -v`
 
 Expected: failures because the event union, routers, and exception handlers are not implemented.
 
-- [ ] **Step 7: Implement routers, SSE union, middleware, and OpenAPI export**
+- [x] **Step 7: Implement routers, SSE union, middleware, and OpenAPI export**
 
 The event envelope uses:
 
@@ -441,13 +441,13 @@ def export_openapi(path: Path) -> None:
     path.write_text(content + "\n", encoding="utf-8", newline="\n")
 ```
 
-- [ ] **Step 8: Run the API and contract tests to verify they pass**
+- [x] **Step 8: Run the API and contract tests to verify they pass**
 
 Run: `uv run pytest backend/tests -v`
 
 Expected: all tests pass.
 
-- [ ] **Step 9: Export OpenAPI and verify it is deterministic**
+- [x] **Step 9: Export OpenAPI and verify it is deterministic**
 
 Run: `uv run python -m scripts.contracts.export_openapi`
 
@@ -459,7 +459,7 @@ Run: `git diff --exit-code -- backend/openapi.json`
 
 Expected: the second export produces no diff.
 
-- [ ] **Step 10: Commit T02**
+- [x] **Step 10: Commit T02**
 
 ```powershell
 git add backend/app/api backend/tests scripts backend/openapi.json

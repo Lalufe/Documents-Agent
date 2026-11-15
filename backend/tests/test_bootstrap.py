@@ -1,3 +1,5 @@
+# pyright: basic
+
 from fastapi import FastAPI
 
 

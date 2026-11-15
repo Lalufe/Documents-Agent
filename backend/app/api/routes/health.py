@@ -4,7 +4,7 @@ from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
 from sqlalchemy import Engine, text
 
-from app.api.schemas.common import HealthStatus
+from app.api.schemas.common import HealthStatus, OfficeHealth
 
 router = APIRouter()
 
@@ -16,6 +16,20 @@ def health(request: Request) -> HealthStatus | JSONResponse:
         with engine.connect() as connection:
             connection.execute(text("SELECT 1")).scalar_one()
     except Exception:
-        payload = HealthStatus(status="error", database="error", application="ok")
+        payload = HealthStatus(
+            status="error",
+            application="ok",
+            database="error",
+            config="ok",
+            migrations="ok",
+            office=cast(OfficeHealth, request.app.state.office_status),
+        )
         return JSONResponse(status_code=503, content=payload.model_dump())
-    return HealthStatus(status="ok", database="ok", application="ok")
+    return HealthStatus(
+        status="ok",
+        application="ok",
+        database="ok",
+        config="ok",
+        migrations="ok",
+        office=cast(OfficeHealth, request.app.state.office_status),
+    )

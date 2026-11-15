@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import os
 from pathlib import Path
 from typing import Any
 
@@ -25,10 +24,6 @@ def create_engine_for_path(database_path: Path) -> Engine:
 
 
 def database_path_from_env() -> Path:
-    configured = os.environ.get("DOC_AGENT_DATA_DIR", "./data")
-    data_dir = Path(configured).expanduser()
-    if not data_dir.is_absolute():
-        data_dir = Path.cwd() / data_dir
-    data_dir = data_dir.resolve()
-    data_dir.mkdir(parents=True, exist_ok=True)
-    return data_dir / "app.db"
+    from app.settings import AppSettings
+
+    return AppSettings.from_env().database_path

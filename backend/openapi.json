@@ -671,9 +671,20 @@
             "title": "Application",
             "type": "string"
           },
+          "config": {
+            "title": "Config",
+            "type": "string"
+          },
           "database": {
             "title": "Database",
             "type": "string"
+          },
+          "migrations": {
+            "title": "Migrations",
+            "type": "string"
+          },
+          "office": {
+            "$ref": "#/components/schemas/OfficeHealth"
           },
           "status": {
             "title": "Status",
@@ -682,8 +693,11 @@
         },
         "required": [
           "status",
+          "application",
           "database",
-          "application"
+          "config",
+          "migrations",
+          "office"
         ],
         "title": "HealthStatus",
         "type": "object"
@@ -1232,6 +1246,38 @@
         "type": "object"
       },
       "JsonValue": {},
+      "OfficeHealth": {
+        "additionalProperties": false,
+        "properties": {
+          "detail": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Detail"
+          },
+          "status": {
+            "enum": [
+              "available",
+              "unavailable",
+              "unsupported_platform",
+              "unknown"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "detail"
+        ],
+        "title": "OfficeHealth",
+        "type": "object"
+      },
       "PlanCreatedEvent": {
         "additionalProperties": false,
         "properties": {
